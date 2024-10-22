@@ -19,6 +19,15 @@ const noteSchema = new mongoose.Schema({
   important: Boolean,
 })
 
+// Modify the toJSON method to exclude _id and __v
+noteSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
+})
+
 const Note = mongoose.model('Note', noteSchema)
 
 // const note = new Note({
