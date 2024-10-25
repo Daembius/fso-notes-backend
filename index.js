@@ -6,22 +6,7 @@ const Note = require('./models/note')
 
 const app = express()
 
-// const mongoose = require('mongoose')
-
-// const password = process.argv[2]
-
-// const url = `mongodb+srv://jumay:${password}@cluster0.qif4b.mongodb.net/noteApp?retryWrites=true&w=majority&appName=Cluster0`
-// const url = process.env.MONGODB_URI;
-
-// mongoose.set('strictQuery',false)
-// mongoose.connect(url)
-
-// const noteSchema = new mongoose.Schema({
-//   content: String,
-//   important: Boolean,
-// })
-
-// const Note = mongoose.model('Note', noteSchema)
+let notes = []
 
 // Use middleware
 app.use(express.json())
@@ -58,13 +43,6 @@ app.get('/api/notes/:id', (request, response) => {
   })
 })
 
-const generateId = () => {
-  const maxId = notes.length > 0
-    ? Math.max(...notes.map(n => n.id))
-    : 0
-  return maxId + 1
-}
-
 app.post('/api/notes', (request, response) => {
   const body = request.body
 
@@ -82,12 +60,39 @@ app.post('/api/notes', (request, response) => {
   })
 })
 
-app.delete('/api/notes/:id', (request, response) => {
-  const id = Number(request.params.id)
-  notes = notes.filter(note => note.id !== id)
+// app.delete('/api/notes/:id', (request, response) => {
+//   const id = Number(request.params.id)
+//   notes = notes.filter(note => note.id !== id)
 
-  response.status(204).end()
+//   response.status(204).end()
+// })
+
+app.delete('/api/notes/:id', (request, response, next) => {
+  Note.findByIdAndDelete(request.params.id)
+    .then(result => {
+      if (result) {
+        response.status(204).end() // Note successfully deleted
+      } else {
+        response.status(404).end() // Note not found
+      }
+    })
+    .catch(error => next(error)) // Pass the error to the error handler
 })
+
+
+// Error handling middleware
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  }
+
+  next(error)
+}
+
+app.use(errorHandler)
+
 
 app.use(unknownEndpoint)
 
