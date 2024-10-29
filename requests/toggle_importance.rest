@@ -1,0 +1,16 @@
+PUT http://localhost:3001/api/notes/6720e8eba4dd057dee69cc4a
+Content-Type: application/json
+
+{
+    "content": "Browser can execute only JavaScript",
+    "important": true
+}
+
+###
+PUT http://localhost:3001/api/notes/6720e9dba4dd057dee69cc4f
+Content-Type: application/json
+
+{
+    "Content": "Firefox is a good browser",
+    "important": false
+}
