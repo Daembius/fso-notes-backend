@@ -1,15 +1,8 @@
-require('dotenv').config();
-
 const express = require('express')
-const cors = require('cors')
-const Note = require('./models/note')
-
 const app = express()
-
-// Use middleware
-app.use(express.json())
-app.use(cors())
-app.use(express.static('dist'))
+require('dotenv').config()
+const Note = require('./models/note')
+const cors = require('cors')
 
 // Middleware for logging requests
 const requestLogger = (request, response, next) => {
@@ -20,8 +13,30 @@ const requestLogger = (request, response, next) => {
   next()
 }
 
+// Error handling middleware
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  } else if (error.name === 'ValidationError') {
+    return response.status(400).json({ error: error.message })
+  }
+
+  next(error)
+}
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+// Middleware 
+app.use(express.static('dist'))
+app.use(express.json())
+app.use(cors())
 app.use(requestLogger)
 
+// Routes
 app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>')
 })
@@ -41,7 +56,6 @@ app.get('/api/notes/:id', (request, response, next) => {
         response.status(404).end()
       }
     })
-
     .catch(error => next(error))
 })
 
@@ -57,10 +71,8 @@ app.post('/api/notes', (request, response, next) => {
     .then(savedNote => {
       response.json(savedNote)
     })
-
     .catch(error => next(error))
 })
-
 
 app.delete('/api/notes/:id', (request, response, next) => {
   Note.findByIdAndDelete(request.params.id)
@@ -70,60 +82,24 @@ app.delete('/api/notes/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
-/* ALTERNATIVE
-app.delete('/api/notes/:id', (request, response, next) => {
-  Note.findByIdAndDelete(request.params.id)
-    .then(result => {
-      if (result) {
-        response.status(204).end() // Note successfully deleted
-      } else {
-        response.status(404).end() // Note not found
-      }
-    })
-    .catch(error => next(error)) // Pass the error to the error handler
-})
-*/
-
-// Toggling the importance of a note
 app.put('/api/notes/:id', (request, response, next) => {
-
   const { content, important } = request.body
 
   Note.findByIdAndUpdate(
-    request.params.id, 
-
+    request.params.id,
     { content, important },
     { new: true, runValidators: true, context: 'query' }
-  ) 
+  )
     .then(updatedNote => {
       response.json(updatedNote)
     })
     .catch(error => next(error))
 })
 
-const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: 'unknown endpoint' })
-}
 
 app.use(unknownEndpoint)
-
-// Error handling middleware
-const errorHandler = (error, request, response, next) => {
-  console.error(error.message)
-
-  if (error.name === 'CastError') {
-    return response.status(400).send({ error: 'malformatted id' })
-
-  } else if (error.name === 'ValidationError') {
-    return response.status(400).json({ error: error.message })
-  }
-
-  next(error)
-}
-
 app.use(errorHandler)
 
-// const PORT = process.env.PORT || 3001
 const PORT = process.env.PORT
 
 app.listen(PORT, () => {
