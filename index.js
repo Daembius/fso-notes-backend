@@ -30,7 +30,7 @@ const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
 
-// Middleware 
+// Middleware
 app.use(express.static('dist'))
 app.use(express.json())
 app.use(cors())
@@ -75,8 +75,8 @@ app.post('/api/notes', (request, response, next) => {
 })
 
 app.delete('/api/notes/:id', (request, response, next) => {
-  Note.findByIdAndDelete(request.params.id)
-    .then(result => {
+  Note.findByIdAndRemove(request.params.id)
+    .then(() => {
       response.status(204).end()
     })
     .catch(error => next(error))
