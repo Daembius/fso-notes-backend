@@ -30,15 +30,17 @@ noteSchema.set('toJSON', {
 
 const Note = mongoose.model('Note', noteSchema)
 
-// const note = new Note({
-//   content: 'This is my note',
-//   important: false,
-// })
+/*
+const note = new Note({
+  content: 'This is my note',
+  important: false,
+})
 
-// note.save().then(result => {
-//   console.log('note saved!')
-//   mongoose.connection.close()
-// })
+note.save().then(result => {
+  console.log('note saved!')
+  mongoose.connection.close()
+})
+*/
 
 Note.find({}).then(result => {
   result.forEach(note => {
