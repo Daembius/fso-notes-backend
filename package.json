@@ -6,21 +6,21 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "\"echo \\\"Error: no test specified\\\" && exit 1\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "build:ui": "rm -rf dist && cd /home/julien/GitHub/fso-notes-frontend && npm run build && cp -r dist /home/julien/GitHub/fso-notes-backend",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
     "lint": "eslint ."
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Daembius/FullStackOpen.git"
+    "url": "git+https://github.com/Daembius/fso-notes-backend.git"
   },
-  "author": "\"Julien Mayard\"",
+  "author": "Julien Mayard",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Daembius/FullStackOpen/issues"
+    "url": "https://github.com/Daembius/fso-notes-backend/issues"
   },
-  "homepage": "https://github.com/Daembius/FullStackOpen#readme",
+  "homepage": "https://github.com/Daembius/fso-notes-backend#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
