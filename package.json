@@ -1,7 +1,7 @@
 {
   "name": "notes-backend",
   "version": "1.0.0",
-  "description": "\"Simple Web Server\"",
+  "description": "Simple Web Server",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
