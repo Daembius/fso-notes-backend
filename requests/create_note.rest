@@ -22,3 +22,33 @@ Content-Type: application/json
     "content": "HTML is easy",
     "important": true
 }
+
+###
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+    "content": "Popeye chronomètre le temps de Jérôme",
+    "important": true,
+     "userId": "677bec048eadc81f7838b3e1"
+}
+
+###
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+    "content": "Popeye fait du hors-piste",
+    "important": true,
+     "userId": "677bec048eadc81f7838b3e1"
+}
+
+###
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+    "content": "Popeye se tape la femme du Bordelais",
+    "important": true,
+     "userId": "677bec048eadc81f7838b3e1"
+}

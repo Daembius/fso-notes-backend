@@ -1,0 +1,39 @@
+
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+    "username": "root",
+    "name": "Superuser",
+    "password": "salainen"
+}
+
+###
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+    "username": "bmorin",
+    "name": "Bernard Morin",
+    "password": "cQuoilemotdepasse?"
+}
+
+###
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+    "username": "natmorin",
+    "name": "Nathalie Morin",
+    "password": "mot2passe&toi"
+}
+
+###
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+    "username": "popeye",
+    "name": "Robert Lespinasse",
+    "password": "lesbronzesfontduski"
+}
