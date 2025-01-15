@@ -52,3 +52,13 @@ Content-Type: application/json
     "important": true,
      "userId": "677bec048eadc81f7838b3e1"
 }
+
+###
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJseW5kb24iLCJpZCI6IjY3ODdhZTFjMDM1ZmYyMzRhOGI0NTI0NiIsImlhdCI6MTczNjk1MzYzOH0.9pnwpH5xgjefbNOHkLXTck3_F-YSeHTChKVM2r96gt0
+
+{
+    "content": "Barry Lyndon is a movie by Stanley Kubrick",
+    "important": true
+}

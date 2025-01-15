@@ -37,3 +37,13 @@ Content-Type: application/json
     "name": "Robert Lespinasse",
     "password": "lesbronzesfontduski"
 }
+
+###
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+    "username": "blyndon",
+    "name": "Barry Lyndon",
+    "password": "Sur1musique2Shubert"
+}
